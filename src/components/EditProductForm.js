@@ -84,7 +84,7 @@ function EditProductForm() {
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label><b>Price</b></Form.Label>
-                                    <Form.Control type="number" min={0}
+                                    <Form.Control type="number" min={0} step="0.01"
                                         className="input"
                                         value={product.price}
                                         onChange={e => setProduct({ ...product, price: e.target.value })}

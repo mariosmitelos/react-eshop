@@ -16,7 +16,6 @@ const CartItem = (props) => {
         dispatch(cartActions.deleteProduct(id))
     }
 
-    console.log(description)
 
     return (
         <li className='item'>

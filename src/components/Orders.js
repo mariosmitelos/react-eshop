@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
-function ProductList() {
+function Orders() {
 
-    const [products, setProducts] = useState([])
+    const [orders, setOrders] = useState([])
     const navigate = useNavigate()
     const [error, setError] = useState(null)
-    const [description, setDescription] = useState('')
+    const [address, setAddress] = useState('')
     const [page, setPage] = useState(0)
     const [size, setSize] = useState(10)
     const [sort, setSort] = useState("ASC")
@@ -19,7 +19,7 @@ function ProductList() {
     const [refresh, setRefresh] = useState(0)
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/products?page=${page}&size=${size}&sort=${sort}` + (description ? `&description=${description}` : ''))
+        fetch(`http://localhost:8080/api/orders?page=${page}&size=${size}&sort=${sort}` + (address ? `&description=${address}` : ''))
             .then((res) => res.json())
             .then(page => {
                 const {
@@ -30,14 +30,14 @@ function ProductList() {
                 } = page;
                 setNumber(number)
                 setTotalPages(totalPages)
-                setProducts(content)
+                setOrders(content)
                 setTotalElements(totalElements)
             })
             .catch(err => setError(err))
-    }, [description, page, size, sort, refresh, number])
+    }, [address, page, size, sort, refresh, number])
 
     const deleteProduct = useCallback((id) => {
-        fetch(`http://localhost:8080/api/products/${id}`, {
+        fetch(`http://localhost:8080/api/orders/${id}`, {
             method: 'DELETE'
         })
             .then(() => {
@@ -53,7 +53,7 @@ function ProductList() {
 
         <main style={{ marginTop: '56px' }} className="container pt-5">
 
-            <h1>Products</h1>
+            <h1>Orders</h1>
 
             <div className="row mt-5">
                 <div className="col-2">
@@ -61,12 +61,12 @@ function ProductList() {
 
                 </div>
                 <div className="col">
-                    <input value={description} onChange={(e) => setDescription(e.target.value)} name="description" className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <input value={address} onChange={(e) => setAddress(e.target.value)} name="description" className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 </div>
                 <div className="col-4">
                     <select defaultValue={sort} onChange={(e) => { setSort(e.target.value) }} className="form-select" aria-label="Default select example">
-                        <option value="ASC">Sort by Description: Ascending</option>
-                        <option value="DESC">Sort by Description: Descending</option>
+                        <option value="ASC">Sort by Address: Ascending</option>
+                        <option value="DESC">Sort by Address: Descending</option>
                     </select>
                 </div>
             </div>
@@ -78,32 +78,45 @@ function ProductList() {
 
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Options</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Products</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Order Price</th>
                     </tr>
 
                 </thead>
 
                 <tbody>
-                    {products ?
-                        products.map(product => (
-                            <tr key={product.id}>
-                                <th scope="row">{product.id}</th>
-                                <td>{product.description}</td>
-                                <td>€{product.price}</td>
-                                <td>
-                                    <div className="row" style={{ width: '190px' }}>
-                                        <div className="col">
-                                            <NavLink to={`/edit/${product.id}`} className="btn btn-light">Edit</NavLink>
+                    {orders ?
+                        orders.map(order => {
+                            return (
+                                <tr style={{ verticalAlign: 'middle' }} key={order.id}>
+                                    <th scope="row">{order.id}</th>
+                                    <td>{order.address}</td>
+                                    <td>{order.products.map((product) => {
+                                        return (
+                                            <div>{product.description} </div>
+                                        )
+                                    })}</td>
+                                    <td>{order.products.map((product) => {
+                                        return (
+                                            <div>{product.quantity} </div>
+                                        )
+                                    })}</td>
+                                    <td>€{order.totalCost}</td>
+                                    <td>
+                                        <div className="row" style={{ width: '190px' }}>
+                                            <div className="col">
+                                                <NavLink to={`/edit/${order.id}`} className="btn btn-light">Edit</NavLink>
+                                            </div>
+                                            <div className="col">
+                                                <button onClick={() => deleteProduct(order.id)} type="button" className="btn btn-danger">Delete</button>
+                                            </div>
                                         </div>
-                                        <div className="col">
-                                            <button onClick={() => deleteProduct(product.id)} type="button" className="btn btn-danger">Delete</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        )) : <div className="row">
+                                    </td>
+                                </tr>
+                            )
+                        }) : <div className="row">
                             <div className="col text-center"><span>No products found. Add some products to see and manage them here by clicking the "Add new product" button</span></div>
                         </div>
                     }
@@ -187,4 +200,4 @@ function ProductList() {
     )
 }
 
-export default ProductList;
+export default Orders;
