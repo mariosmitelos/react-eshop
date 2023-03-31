@@ -30,11 +30,12 @@ function App() {
       <BrowserRouter>
 
         {!isLoggedIn && <Login />}
-        {isLoggedIn && user.roles[0].name === 'ADMIN' ? <AdminNavBar></AdminNavBar> : <UserNavBar></UserNavBar>}
-        {isVisible && <Cart />}
-
+        {isLoggedIn && user?.roles[0].name === 'ADMIN' && <AdminNavBar></AdminNavBar>}
+        {isLoggedIn && user?.roles[0].name === 'CUSTOMER' && <UserNavBar></UserNavBar>}
+        {/* {isVisible && user?.roles[0].name === 'CUSTOMER' && <Cart />} */}
         <Routes>
-          <Route path='/' element={<Home role={user?.roles[0].name} />} />
+          {/* <Route path="/" element={<h2 style={{ textAlign: 'center', marginTop: '50px' }}>Welcome to the Admin Panel. Select one from the options above</h2>} /> */}
+          <Route path='/' element={<Home />} />
           <Route path='/orders' element={<Orders />} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/edit/product/:id?" element={<EditProductForm />} />

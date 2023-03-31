@@ -1,12 +1,20 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import AuthContext from "./context/auth-context";
+import { useContext } from "react";
+import Cart from "./Cart";
+import { useSelector } from "react-redux";
 
-function Home({ role }) {
+
+function Home() {
+
+    const { isLoggedIn, user } = useContext(AuthContext)
+    const isVisible = useSelector((state) => state.toggle.isVisible)
 
 
 
-    if (role === 'ADMIN') {
+    if (isLoggedIn && user?.roles[0].name === 'ADMIN') {
         return (
             <>
                 <div className="row" style={{ justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
@@ -27,10 +35,14 @@ function Home({ role }) {
         )
     }
 
-    else {
+    if (isLoggedIn && user?.roles[0].name === 'CUSTOMER') {
 
         return (
-            <h2 style={{ textAlign: 'center', marginTop: '50px' }}>Welcome to MindTheCode eShop! Select New Order above to place your order</h2>
+            <>
+                {isVisible && <Cart />}
+
+                <h2 style={{ textAlign: 'center', marginTop: '50px' }}>Welcome to MindTheCode eShop! Select New Order above to place your order</h2>
+            </>
         )
     }
 }

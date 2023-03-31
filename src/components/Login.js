@@ -52,7 +52,8 @@ function Login(props) {
           if (res.ok) {
             return res.json();
           }
-          throw new Error("Invalid credentials")
+          return res.json().then(response => { throw new Error(response) })
+
 
         })
         .then((data) => {
@@ -92,6 +93,8 @@ function Login(props) {
 
             return res.json();
           }
+          return res.json().then(response => { throw new Error(response) })
+
         })
         .then((data) => {
           login(data);
@@ -134,7 +137,6 @@ function Login(props) {
           }
         })
         .then((data) => {
-          console.log(data)
         })
         .catch(err => setError(err))
 

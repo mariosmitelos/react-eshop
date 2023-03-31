@@ -6,10 +6,17 @@ import { Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthContext from './context/auth-context';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AdminNavBar() {
 
     const { logout } = useContext(AuthContext)
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/')
+    }
 
     return (
         <>
@@ -24,7 +31,7 @@ function AdminNavBar() {
                             <Nav.Link as={Link} to="/products">Products</Nav.Link>
                             <Nav.Link as={Link} to="/orders">Orders</Nav.Link>
                         </Nav>
-                        <Button variant="warning" onClick={() => logout()}>Logout</Button>
+                        <Button variant="warning" onClick={handleLogout}>Logout</Button>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

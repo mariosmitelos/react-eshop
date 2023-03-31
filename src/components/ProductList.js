@@ -195,7 +195,7 @@ function ProductList() {
 
     }
 
-    else {
+    if (isLoggedIn && user?.roles[0].name === 'CUSTOMER') {
         return (<Alert variant="danger">Oops, you don't have access to this page!</Alert>)
 
     }

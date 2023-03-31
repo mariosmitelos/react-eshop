@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux"
 import { cartActions, toggleActions } from "../store"
 import { useSelector } from "react-redux"
 import AuthContext from "./context/auth-context";
+import Cart from "./Cart";
 
 function OrderForm() {
 
@@ -51,6 +52,7 @@ function OrderForm() {
 
         return (<>
 
+            {isVisible && <Cart />}
 
             <main style={{ marginTop: '56px' }} className="container pt-5">
 
@@ -182,7 +184,7 @@ function OrderForm() {
         )
 
     }
-    else {
+    if (isLoggedIn && user?.roles[0].name === 'ADMIN') {
         return (<Alert variant="danger">Oops, sorry Admin, Login as a customer if you want to place an order!</Alert>)
 
     }

@@ -3,7 +3,7 @@ import AuthContext from './auth-context'
 import { Spinner } from 'react-bootstrap';
 
 const AuthContextProvider = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -11,8 +11,16 @@ const AuthContextProvider = ({ children }) => {
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
-            setIsLoggedIn(true);
+            try {
+                setUser(JSON.parse(storedUser));
+                // setIsLoggedIn(true);
+            } catch (error) {
+                console.error('Error parsing stored user data:', error);
+                // setIsLoggedIn(false);
+                localStorage.removeItem('user');
+
+
+            }
 
         }
         setIsLoading(false);
@@ -20,14 +28,14 @@ const AuthContextProvider = ({ children }) => {
     }, []);
 
     const login = (userData) => {
-        setIsLoggedIn(true);
+        // setIsLoggedIn(true);
         setUser(userData);
         localStorage.setItem('user', JSON.stringify(userData));
 
     };
 
     const logout = () => {
-        setIsLoggedIn(false);
+        // setIsLoggedIn(false);
         setUser(null);
         localStorage.removeItem('user');
 
@@ -35,7 +43,7 @@ const AuthContextProvider = ({ children }) => {
 
     const contextValue = {
         user,
-        isLoggedIn,
+        isLoggedIn: !!user,
         login,
         logout,
     };

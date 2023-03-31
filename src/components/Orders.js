@@ -23,7 +23,7 @@ function Orders() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/orders?page=${page}&size=${size}&sort=${sort}` + (address ? `&description=${address}` : ''))
+        fetch(`http://localhost:8080/api/orders?page=${page}&size=${size}&sort=${sort}` + (address ? `&address=${address}` : ''))
             .then((res) => res.json())
             .then(page => {
                 const {
