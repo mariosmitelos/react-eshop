@@ -28,6 +28,7 @@ function Login(props) {
     setFirstName("");
     setLastName("");
     setEmail("")
+    setError("")
 
   }
 
@@ -52,7 +53,7 @@ function Login(props) {
           if (res.ok) {
             return res.json();
           }
-          return res.json().then(response => { throw new Error(response) })
+          return res.json().then(response => { throw new Error(response.message) })
 
 
         })
@@ -62,7 +63,6 @@ function Login(props) {
         })
 
         .catch(err => {
-          console.log(err)
           setError(err)
         }
         )
@@ -93,7 +93,7 @@ function Login(props) {
 
             return res.json();
           }
-          return res.json().then(response => { throw new Error(response) })
+          return res.json().then(response => { throw new Error(response.message) })
 
         })
         .then((data) => {
@@ -133,14 +133,14 @@ function Login(props) {
             setUsername("");
             setPassword("");
             setAuthMode('signin')
+            setError("")
             return res.json();
           }
+          return res.json().then(response => { throw new Error(response.message) });
         })
         .then((data) => {
         })
         .catch(err => setError(err))
-
-
 
     }
 
@@ -197,7 +197,7 @@ function Login(props) {
                 required
               />
             </div>
-            {/* {error && <Alert variant="danger" >{error}</Alert>} */}
+            {error && <Alert style={{ marginTop: '5px' }} variant="danger" >{error.message}</Alert>}
             <div className="d-grid gap-2 mt-3">
               <button type="submit" className="btn btn-primary">
                 Submit
@@ -250,6 +250,7 @@ function Login(props) {
                 required
               />
             </div>
+            {error && <Alert style={{ marginTop: '5px' }} variant="danger" >{error.message}</Alert>}
             <div className="d-grid gap-2 mt-3">
               <button type="submit" className="btn btn-primary">
                 Submit
@@ -329,6 +330,8 @@ function Login(props) {
               required
             />
           </div>
+          {error && <Alert style={{ marginTop: '5px' }} variant="danger" >{error.message}</Alert>}
+
           <div className="d-grid gap-2 mt-3">
             <button type="submit" className="btn btn-primary">
               Submit
