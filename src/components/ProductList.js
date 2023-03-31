@@ -57,7 +57,7 @@ function ProductList() {
 
             <div className="row mt-5">
                 <div className="col-2">
-                    <button className="btn btn-primary" form="new-product" onClick={() => { navigate('/edit') }} >Add New Product</button>
+                    <button className="btn btn-primary" form="new-product" onClick={() => { navigate('/edit/product') }} >Add New Product</button>
 
                 </div>
                 <div className="col">
@@ -95,7 +95,7 @@ function ProductList() {
                                 <td>
                                     <div className="row" style={{ width: '190px' }}>
                                         <div className="col">
-                                            <NavLink to={`/edit/${product.id}`} className="btn btn-light">Edit</NavLink>
+                                            <NavLink to={`/edit/product/${product.id}`} className="btn btn-light">Edit</NavLink>
                                         </div>
                                         <div className="col">
                                             <button onClick={() => deleteProduct(product.id)} type="button" className="btn btn-danger">Delete</button>

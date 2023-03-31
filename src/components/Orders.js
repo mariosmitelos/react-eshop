@@ -36,7 +36,8 @@ function Orders() {
             .catch(err => setError(err))
     }, [address, page, size, sort, refresh, number])
 
-    const deleteProduct = useCallback((id) => {
+    const deleteOrder = useCallback((id) => {
+        console.log(id)
         fetch(`http://localhost:8080/api/orders/${id}`, {
             method: 'DELETE'
         })
@@ -56,10 +57,7 @@ function Orders() {
             <h1>Orders</h1>
 
             <div className="row mt-5">
-                <div className="col-2">
-                    <button className="btn btn-primary" form="new-product" onClick={() => { navigate('/edit') }} >Add New Product</button>
 
-                </div>
                 <div className="col">
                     <input value={address} onChange={(e) => setAddress(e.target.value)} name="description" className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                 </div>
@@ -107,10 +105,10 @@ function Orders() {
                                     <td>
                                         <div className="row" style={{ width: '190px' }}>
                                             <div className="col">
-                                                <NavLink to={`/edit/${order.id}`} className="btn btn-light">Edit</NavLink>
+                                                <NavLink to={`/edit/order/${order.id}`} className="btn btn-light">Edit</NavLink>
                                             </div>
                                             <div className="col">
-                                                <button onClick={() => deleteProduct(order.id)} type="button" className="btn btn-danger">Delete</button>
+                                                <button onClick={() => deleteOrder(order.id)} type="button" className="btn btn-danger">Delete</button>
                                             </div>
                                         </div>
                                     </td>

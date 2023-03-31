@@ -6,20 +6,16 @@ import store from "./store"
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap';
+import AuthContextProvider from './components/context/AuthContextProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
     </Provider>
-    {/* <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/edit/:id?" element={<EditProductForm />} />
-      </Routes>
-    </BrowserRouter> */}
   </React.StrictMode>
 );
 

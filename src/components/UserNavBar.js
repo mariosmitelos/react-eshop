@@ -7,11 +7,15 @@ import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { toggleActions } from "../store"
+import { useContext } from 'react';
+import AuthContext from './context/auth-context';
 
 function UserNavBar() {
 
     const quantity = useSelector((state) => state.cart.totalQuantity)
     const dispatch = useDispatch();
+
+    const { user } = useContext(AuthContext)
 
     const toggleHandler = () => {
         dispatch(toggleActions.toggleCart())
@@ -27,6 +31,8 @@ function UserNavBar() {
                         <Nav className="me-auto">
                             <Nav.Link as={Link} to="/new-order">New Order</Nav.Link>
                         </Nav>
+                        <Badge bg="warning">Welcome, {user?.firstName}
+                        </Badge>
 
                         <Button onClick={toggleHandler} variant="primary"><span>My Cart</span> <Badge bg="danger">{quantity}
                         </Badge> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-cart" viewBox="0 0 16 16">
