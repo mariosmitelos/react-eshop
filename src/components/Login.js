@@ -1,3 +1,4 @@
+import { Alert } from "react-bootstrap";
 import React, { useState, useContext } from "react"
 import { Modal, Button } from "react-bootstrap"
 import AuthContext from "./context/auth-context";
@@ -49,17 +50,21 @@ function Login(props) {
       })
         .then((res) => {
           if (res.ok) {
-
             return res.json();
           }
+          throw new Error("Invalid credentials")
+
         })
         .then((data) => {
-          console.log(data.firstName)
 
           login(data);
         })
 
-        .catch(err => setError(err))
+        .catch(err => {
+          console.log(err)
+          setError(err)
+        }
+        )
 
     }
 
@@ -190,6 +195,7 @@ function Login(props) {
                 required
               />
             </div>
+            {/* {error && <Alert variant="danger" >{error}</Alert>} */}
             <div className="d-grid gap-2 mt-3">
               <button type="submit" className="btn btn-primary">
                 Submit

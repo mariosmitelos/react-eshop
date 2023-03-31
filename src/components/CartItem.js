@@ -3,7 +3,7 @@ import { cartActions } from "../store"
 import './CartItem.css'
 
 const CartItem = (props) => {
-    const { id, description, quantity, price, total } = props.item
+    const { id, name, description, quantity, price, total } = props.item
 
     const dispatch = useDispatch()
 
@@ -20,12 +20,15 @@ const CartItem = (props) => {
     return (
         <li className='item'>
             <header>
-                <h3>{description}</h3>
+                <h3>{name}</h3>
                 <div className='price'>
                     €{total.toFixed(2)}
                     <span className='itemprice'>(€{price.toFixed(2)}/item)</span>
                 </div>
+
             </header>
+            <h6>{description}</h6>
+
             <div className='details'>
                 <div className='quantity'>
                     x <span>{quantity}</span>

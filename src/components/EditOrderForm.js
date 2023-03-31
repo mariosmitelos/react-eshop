@@ -1,7 +1,8 @@
 import React from "react";
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Alert } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
+import AuthContext from "./context/auth-context";
 
 
 function EditOrderForm() {
@@ -10,6 +11,7 @@ function EditOrderForm() {
     const [refresh, setRefresh] = useState(0)
     const [err, setError] = useState(null)
     const navigate = useNavigate()
+    const { isLoggedIn, user } = useContext(AuthContext)
     // const quantityRefs = useRef([...new Array(location.totalOrders)].map(() => React.createRef()))
 
 
@@ -71,65 +73,70 @@ function EditOrderForm() {
     }
 
 
+    if (isLoggedIn && user?.roles[0].name === 'ADMIN') {
+        return (
+            <>
+                <main style={{ marginTop: '56px' }} className="container pt-5">
+                    {
+                        order ? (
+                            <>
+                                {
+                                    order.id ? (
+                                        <h1> Edit Order #{order.id}</h1>
+                                    ) : (
+                                        <h1> Order not found </h1>
+                                    )
+                                }
+                                <Form onSubmit={handleSubmit}>
+                                    <Form.Group>
+                                        <Form.Label><b>Address</b></Form.Label>
+                                        <Form.Control type="text"
+                                            className="input"
+                                            value={order.address}
+                                            onChange={e => setOrder({ ...order, address: e.target.value })}
+                                            placeholder="Enter description" />
+                                    </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label style={{ marginTop: '10px' }}><b>Products</b></Form.Label>
+                                        {order.products?.map((product, index) => {
+                                            return (
+                                                <>
+                                                    <Form.Control type="text"
+                                                        className="input"
 
-    return (
-        <>
-            <main style={{ marginTop: '56px' }} className="container pt-5">
-                {
-                    order ? (
-                        <>
-                            {
-                                order.id ? (
-                                    <h1> Edit Order #{order.id}</h1>
-                                ) : (
-                                    <h1> Order not found </h1>
-                                )
-                            }
-                            <Form onSubmit={handleSubmit}>
-                                <Form.Group>
-                                    <Form.Label><b>Address</b></Form.Label>
-                                    <Form.Control type="text"
-                                        className="input"
-                                        value={order.address}
-                                        onChange={e => setOrder({ ...order, address: e.target.value })}
-                                        placeholder="Enter description" />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label style={{ marginTop: '10px' }}><b>Products</b></Form.Label>
-                                    {order.products?.map((product, index) => {
-                                        return (
-                                            <>
-                                                <Form.Control type="text"
-                                                    className="input"
-
-                                                    value={`${product.description} - Quantity: ${product.quantity}`}
-                                                    disabled
-                                                />
-
-
-                                                <Form.Control type="number"
-                                                    className="input"
-                                                    onChange={(e) => handleQuantityChange(e, index)}
-                                                    placeholder="Enter new quantity" />
-                                                <br />
-                                            </>
-                                        )
-                                    })}
-
-                                </Form.Group>
-                                <Button variant="primary mt-3" type="submit">
-                                    Submit
-                                </Button>
-                            </Form>
-                        </>
-
-                    ) : null
-                }
-            </main>
-        </>
+                                                        value={`${product.description} - Quantity: ${product.quantity}`}
+                                                        disabled
+                                                    />
 
 
-    );
+                                                    <Form.Control type="number"
+                                                        className="input"
+                                                        onChange={(e) => handleQuantityChange(e, index)}
+                                                        placeholder="Enter new quantity" />
+                                                    <br />
+                                                </>
+                                            )
+                                        })}
+
+                                    </Form.Group>
+                                    <Button variant="primary mt-3" type="submit">
+                                        Submit
+                                    </Button>
+                                </Form>
+                            </>
+
+                        ) : null
+                    }
+                </main>
+            </>
+
+
+        );
+    }
+    else {
+        return (<Alert variant="danger">Oops, you don't have access to this page!</Alert>)
+
+    }
 }
 
 export default EditOrderForm;
