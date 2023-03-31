@@ -5,6 +5,8 @@ import AuthContext from "./context/auth-context";
 import { useContext } from "react";
 import Cart from "./Cart";
 import { useSelector } from "react-redux";
+import Image from 'react-bootstrap/Image'
+import banner from './../images/mindthecode.png'
 
 
 function Home() {
@@ -29,6 +31,10 @@ function Home() {
 
                 </div>
 
+                <div className="row justify-content-center">
+                    <Image style={{ marginTop: '20px', width: '60%' }} src={banner} fluid></Image>
+                </div>
+
 
 
             </>
@@ -41,7 +47,12 @@ function Home() {
             <>
                 {isVisible && <Cart />}
 
-                <h2 style={{ textAlign: 'center', marginTop: '50px' }}>Welcome to MindTheCode eShop! Select New Order above to place your order</h2>
+                <div className="row justify-content-center">
+                    <h2 style={{ textAlign: 'center', marginTop: '50px' }}>Welcome to MindTheCode eShop! Select New Order above to place your order</h2>
+                    <Image style={{ marginTop: '20px', width: '60%' }} src={banner} fluid></Image>
+                </div>
+
+
             </>
         )
     }

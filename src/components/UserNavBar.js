@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import './AdminNavBar.css'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Button, Badge } from 'react-bootstrap';
+import { Button, Badge, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
@@ -10,6 +10,8 @@ import { toggleActions, cartActions } from "../store"
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from './context/auth-context';
+import banner from './../images/mindthecode.png'
+import logo from './../images/eshop.png'
 
 function UserNavBar() {
 
@@ -36,11 +38,15 @@ function UserNavBar() {
         <>
             <Navbar bg="primary" variant="dark" expand="lg">
                 <Container>
-                    <Navbar.Brand as={Link} to="/">MindTheCode e-Shop</Navbar.Brand>
+                    <Badge style={{ margin: '5px' }} bg="warning">Welcome, {user?.firstName}
+                    </Badge>
+                    <Navbar.Brand as={Link} to="/">MindTheCode</Navbar.Brand>
+                    <Image style={{ width: '5%' }} src={logo}></Image>
+
+
 
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Badge bg="warning">Welcome, {user?.firstName}
-                    </Badge>
+
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link as={Link} to="/new-order">New Order</Nav.Link>

@@ -2,11 +2,12 @@ import Container from 'react-bootstrap/Container';
 import './AdminNavBar.css'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Button, Badge } from 'react-bootstrap';
+import { Button, Badge, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import AuthContext from './context/auth-context';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from './../images/eshop.png'
 
 function AdminNavBar() {
 
@@ -22,9 +23,11 @@ function AdminNavBar() {
         <>
             <Navbar bg="primary" variant="dark" expand="lg">
                 <Container>
-                    <Navbar.Brand as={Link} to="/">MindTheCode e-Shop</Navbar.Brand>
-                    <Badge bg="warning">Admin
+                    <Badge style={{ margin: '5px' }} bg="warning">Admin
                     </Badge>
+                    <Navbar.Brand as={Link} to="/">MindTheCode</Navbar.Brand>
+                    <Image style={{ width: '5%' }} src={logo}></Image>
+
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
